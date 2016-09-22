@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+
+        <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+        <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+        <script>
+            var app = angular.module("myApp", ["ngRoute", 'ui.router']);
+            app.config(function($routeProvider, $stateProvider, $urlRouterProvider) {
+                $routeProvider.when("/", {templateUrl: "main.html"}).when("/green", {templateUrl: "green.html"}).when("/blue", {templateUrl: "blue.html"}).when('/red', {}).otherwise('/');
+
+                $stateProvider.state('red', {
+                    url: '/red',
+                    templateUrl: 'redstate.html'
+                }).state('red.what', {templateUrl: 'redstatechild.html'}).state('red.why', {templateUrl: 'redstatechild1.html'}).state('red.where', {templateUrl: 'redstatechild2.html'}).state('red.when', {templateUrl: 'redstatechild3.html'});
+
+                $stateProvider.state("otherwise", {
+                    url: "*path",
+                    template: ''
+                });
+
+                $urlRouterProvider.otherwise('otherwise', {template: ''});
+
+            });
+        </script>
+    </head>
+    <body ng-app="myApp">
+        <a href="#/green">Go to green</a>
+        <a href="#/blue">Go to blue</a>
+        <a href="#/red">Go to red</a>
+        <a href="#/">Go to main</a>
+
+        <div ng-view></div>
+        <section ui-view></section>
+
+    </body>
+</html>
